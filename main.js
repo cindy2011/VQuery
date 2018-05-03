@@ -27,10 +27,10 @@
             var result = [];
             var i = 0;
             for (i = 0; i < aEle.length; i++) {
-                if (aEle[i].className == oclass) {
+                if (aEle[i].className.indexOf(oclass)!=-1) {
                     result.push(aEle[i]);
                 }
-            }
+            }            
             return result;
         }
 
@@ -79,6 +79,7 @@
                     break;
                 case 'string':
                     if (arg.indexOf(",") == -1) {
+                        // console.log(arg.substring(1));
                         switch (arg.charAt(0)) {
                             case '#': //Id
                                 //#id
@@ -88,6 +89,7 @@
                             case '.': //className
                                 //.class
                                 this.elements = getByClass(document, arg.substring(1));
+                                //console.dir(this.elements);
                                 break;
                             default: //TagName   
                                 this.elements = document.getElementsByTagName(arg);
@@ -118,8 +120,7 @@
         }
         //点击事件
         VQuery.prototype.click = function(fn) {
-            var i = 0;
-            for (i = 0; i < this.elements.length; i++) {
+            for (var i = 0; i < this.elements.length; i++) {                
                 myAddEvent(this.elements[i], 'click', fn);
             }
         };
@@ -160,7 +161,7 @@
         }
         window._$ = _$;
     })(window);
-    _$(".logo,.logo2").click(function() {
+    _$(".download,.downBtn").click(function() {
         if (versionsRes.android) {
             //  android
             if (_$('.androidUrl').attr('href') != "#2") {
